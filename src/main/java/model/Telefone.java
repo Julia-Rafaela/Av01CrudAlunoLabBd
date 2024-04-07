@@ -16,8 +16,5 @@ public class Telefone {
 	public String toString() {
 		return "Telefone [codigo=" + codigo + ", telefone=" + telefone + ", aluno=" + aluno + "]";
 	}
-	
-	
-
 
 }
