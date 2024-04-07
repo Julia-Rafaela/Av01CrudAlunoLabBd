@@ -27,6 +27,13 @@ label {
 			</p>
 			<table>
 				<tr>
+					<td class="aluno">
+						<p class="title">Codigo:</p> <input class="cadastro" type="number"
+						id="codigo" name="codigo" placeholder=""
+						value='<c:out value="${grade.codigo }"></c:out>'>
+					</td>
+				</tr>
+				<tr>
 					<td class="aluno"><label for="curso">Curso:</label></td>
 					<td><select class="input_data" id="curso" name="curso">
 							<option value="">Selecione um Curso</option>
@@ -80,6 +87,7 @@ label {
 					<table class="table_round">
 						<thead>
 							<tr>
+								<th>Codigo</th>
 								<th>Curso</th>
 								<th>Disciplina</th>
 							</tr>
@@ -87,6 +95,7 @@ label {
 						<tbody>
 							<c:forEach var="grade" items="${grades }">
 								<tr>
+									<td><c:out value="${grade.codigo }" /></td>
 									<td><c:out value="${grade.curso.nome }" /></td>
 									<td><c:out value="${grade.disciplina.nome }" /></td>
 								</tr>
@@ -159,7 +168,7 @@ form {
 	margin-left: 30px;
 	background-color: #dcdcdc;
 	width: 600px;
-	height: 300px;
+	height: 350px;
 	padding: 10px;
 	border-radius: 30px;
 }
@@ -225,9 +234,16 @@ select {
 	height: 30px;
 	border: 1px solid #C0C0C0;
 }
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
+.cadastro {
+	margin-top: 10px;
+	background-color: #F5F5DC;
+	border-radius: 20px;
+	outline: none;
+	padding: 0 0.5rem;
+	width: 200px;
+	height: 30px;
+	border: 1px solid #C0C0C0;
+}
 </style>
 </html>

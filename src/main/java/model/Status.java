@@ -5,13 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Disciplina {
+public class Status {
 
-	int codigo;
 	String nome;
-	String horas_inicio;
-	int duracao;
-	String dia_semana;
 
 	@Override
 	public String toString() {

@@ -1,9 +1,6 @@
 package persistence;
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,7 +25,7 @@ public class GradeDao implements ICrud<Grade> {
     public void inserir(Grade grade) throws SQLException, ClassNotFoundException {
         Connection c = gDao.getConnection();
         String sqlVerificar = "SELECT 1 FROM Grade WHERE curso = ? AND disciplina = ?";
-        String sqlInserir = "INSERT INTO Grade (curso, disciplina) VALUES (?, ?)";
+        String sqlInserir = "INSERT INTO Grade (codigo, curso, disciplina) VALUES (?, ?, ?)";
         
         try (PreparedStatement psVerificar = c.prepareStatement(sqlVerificar)) {
             psVerificar.setInt(1, grade.getCurso().getCodigo());
@@ -42,8 +39,9 @@ public class GradeDao implements ICrud<Grade> {
         }
         
         try (PreparedStatement psInserir = c.prepareStatement(sqlInserir)) {
-            psInserir.setInt(1, grade.getCurso().getCodigo());
-            psInserir.setInt(2, grade.getDisciplina().getCodigo());
+        	psInserir.setInt(1, grade.getCodigo());
+            psInserir.setInt(2, grade.getCurso().getCodigo());
+            psInserir.setInt(3, grade.getDisciplina().getCodigo());
             psInserir.executeUpdate();
         }
     }
@@ -51,10 +49,11 @@ public class GradeDao implements ICrud<Grade> {
     @Override
     public void atualizar(Grade grade) throws SQLException, ClassNotFoundException {
         Connection c = gDao.getConnection();
-        String sql = "UPDATE Grade SET disciplina = ? WHERE curso = ?";
+        String sql = "UPDATE Grade SET disciplina = ?, curso = ? WHERE codigo = ?";;
         try (PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setInt(1, grade.getDisciplina().getCodigo());
             ps.setInt(2, grade.getCurso().getCodigo());
+            ps.setInt(3, grade.getCodigo());
             ps.executeUpdate();
         }
     }
@@ -62,24 +61,25 @@ public class GradeDao implements ICrud<Grade> {
     @Override
     public void excluir(Grade grade) throws SQLException, ClassNotFoundException {
         Connection c = gDao.getConnection();
-        String sql = "DELETE FROM Grade WHERE curso = ?";
+        String sql = "DELETE FROM Grade WHERE codigo = ?";
         try (PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setInt(1, grade.getCurso().getCodigo());
+            ps.setInt(1, grade.getCodigo());
             ps.executeUpdate();
         }
     }
 
+
     @Override
     public Grade consultar(Grade grade) throws SQLException, ClassNotFoundException {
         Connection c = gDao.getConnection();
-        String sql = "SELECT g.curso AS codigoCurso, g.disciplina AS codigoDisciplina, "
+        String sql = "SELECT g.codigo AS codigo, g.curso AS codigoCurso, g.disciplina AS codigoDisciplina, "
                    + "c.nome AS nomeCurso, d.nome AS nomeDisciplina "
                    + "FROM Grade g "
                    + "INNER JOIN curso c ON c.codigo = g.curso "
                    + "INNER JOIN disciplina d ON d.codigo = g.disciplina "
-                   + "WHERE g.curso = ?";
+                   + "WHERE g.codigo = ?";
         try (PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setInt(1, grade.getCurso().getCodigo());
+            ps.setInt(1, grade.getCodigo());
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Curso curso = new Curso();
@@ -90,8 +90,11 @@ public class GradeDao implements ICrud<Grade> {
                     disciplina.setCodigo(rs.getInt("codigoDisciplina"));
                     disciplina.setNome(rs.getString("nomeDisciplina"));
                 
+                    grade.setCodigo(rs.getInt("codigo"));
+                    
                     grade.setCurso(curso);
                     grade.setDisciplina(disciplina);
+                    
                 }
             }
         }
@@ -102,7 +105,7 @@ public class GradeDao implements ICrud<Grade> {
     public List<Grade> listar() throws SQLException, ClassNotFoundException {
         List<Grade> grades = new ArrayList<>();
         Connection c = gDao.getConnection();
-        String sql = "SELECT g.curso AS codigoCurso, g.disciplina AS codigoDisciplina, "
+        String sql = "SELECT g.codigo AS codigo, g.curso AS codigoCurso, g.disciplina AS codigoDisciplina, "
                    + "c.nome AS nomeCurso, d.nome AS nomeDisciplina "
                    + "FROM Grade g "
                    + "INNER JOIN curso c ON c.codigo = g.curso "
@@ -120,6 +123,7 @@ public class GradeDao implements ICrud<Grade> {
                 disciplina.setCodigo(rs.getInt("codigoDisciplina"));
                 disciplina.setNome(rs.getString("nomeDisciplina"));
             
+                grade.setCodigo(rs.getInt("codigo"));
                 grade.setCurso(curso);
                 grade.setDisciplina(disciplina);
     
@@ -128,21 +132,6 @@ public class GradeDao implements ICrud<Grade> {
         }
         return grades;
     }
-    
-    public String iudGrade(String op, Grade grade) throws SQLException, ClassNotFoundException {
-        Connection c = gDao.getConnection();
-        String sql = "CALL GerenciarGrade(?,?,?,?)";
-        try (CallableStatement cs = c.prepareCall(sql)) {
-            cs.setString(1, op);
-            cs.setInt(2, grade.getCurso().getCodigo());
-            cs.setInt(3, grade.getDisciplina().getCodigo());
-            cs.registerOutParameter(4, Types.VARCHAR);
-            cs.execute();
-            return cs.getString(4);
-        }
-    }
 }
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
+    
+ 

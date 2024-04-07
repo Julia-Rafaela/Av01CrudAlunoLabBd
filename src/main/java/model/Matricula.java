@@ -6,29 +6,18 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Matricula {
-<<<<<<< Updated upstream
-
+	
+	int codigo;
 	Aluno aluno;
 	Disciplina disciplina;
 	String data;
-
-=======
-	
-	Aluno aluno;
-	Disciplina disciplina;
-	String data;
+	Status status;
 	
 	
->>>>>>> Stashed changes
 	@Override
 	public String toString() {
-		return "Matricula [aluno=" + aluno + ", disciplina=" + disciplina + ", data=" + data + "]";
+		return "Matricula [codigo=" + codigo + ", aluno=" + aluno + ", disciplina=" + disciplina + ", data=" + data
+				+ ", status=" + status + "]";
 	}
 
-<<<<<<< Updated upstream
 }
-=======
-	
-	
-}
->>>>>>> Stashed changes

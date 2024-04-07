@@ -6,63 +6,45 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="./webapp/style.css">
-<title>Matrícula</title>
+<title>Telefone</title>
 </head>
 <body class="tela_aluno">
 	<div class="menu">
 		<jsp:include page="menu.jsp"></jsp:include>
 	</div>
 	<div align="center" class="container">
-		<form action="matricula" method="post">
+		<form action="telefone" method="post">
 			<p class="title">
-				<b class="cadastrar">Realize a Matrícula</b>
+				<b class="cadastrar">Vincule o Telefone</b>
 			</p>
 			<table>
 				<tr>
 					<td class="aluno">
-						<p class="title">Codigo:</p> <input class="cadastro" type="number"
-						id="codigo" name="codigo" placeholder=""
-						value='<c:out value="${matricula.codigo }"></c:out>'>
+						<p class="title">Codigo:</p> <input class="cadastro" type="text"
+						id="codigo" name="codigo"
+						value='<c:out value="${telefone.codigo }"></c:out>'>
 					</td>
 				</tr>
 				<tr>
-					<td class="aluno"><label for="curso">Aluno:</label></td>
-					<td><select class="input_data" id="aluno" name="aluno">
+					<td class="aluno">
+						<p class="title">Aluno:</p> <select class="input_data" id="aluno"
+						name="aluno">
 							<option value="">Selecione o Aluno</option>
 							<c:forEach var="aluno" items="${alunos}">
 								<option value="${aluno.cpf}">${aluno.nome}</option>
 							</c:forEach>
-					</select></td>
-				</tr>
-				<tr class="espaco">
-					<td class="aluno"><label for="disciplina">Disciplina:</label></td>
-					<td><select class="input_data" id="disciplina"
-						name="disciplina">
-							<option value="">Selecione uma Disciplina</option>
-							<c:forEach var="disciplina" items="${disciplinas}">
-								<option value="${disciplina.codigo}">${disciplina.nome}</option>
-							</c:forEach>
-					</select></td>
+					</select>
+					</td>
 				</tr>
 				<tr>
 					<td class="aluno">
-						<p class="title">Data da Matrícula:</p> <input class="cadastro"
-						type="date" id="data_m" name="data_m"
-						value='<c:out value="${matricula.data_m }"></c:out>'>
+						<p class="title">Telefone:</p> <input class="cadastro" type="text"
+						id="telefone" name="telefone"
+						value='<c:out value="${telefone.telefone }"></c:out>'>
 					</td>
-				</tr>
-				<tr class="espaco">
-					<td class="aluno"><label for="status">Status:</label></td>
-					<td><select class="input_data" id="status" name="status">
-							<option value="">Selecione o Status</option>
-							<c:forEach var="status" items="${statuss }">
-								<option value="${status.nome}">${status.nome}</option>
-							</c:forEach>
-					</select></td>
 				</tr>
 				<tr class="botoes">
 					<td><input type="submit" name="botao" value="Cadastrar"></td>
-					<td><input type="submit" name="botao" value="Alterar"></td>
 					<td><input type="submit" name="botao" value="Excluir"></td>
 					<td><input type="submit" name="botao" value="Listar"></td>
 				</tr>
@@ -86,25 +68,21 @@
 	<div align="center">
 		<c:choose>
 			<c:when test="${not empty tipoTabela && tipoTabela eq 'Listar'}">
-				<c:if test="${not empty matriculas }">
+				<c:if test="${not empty telefones }">
 					<table class="table_round">
 						<thead>
 							<tr>
 								<th>Codigo</th>
 								<th>Aluno</th>
-								<th>Disciplina</th>
-								<th>Data Matrícula</th>
-								<th>Status</th>
+								<th>Telefone</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="matricula" items="${matriculas }">
+							<c:forEach var="t" items="${telefones }">
 								<tr>
-									<td><c:out value="${matricula.codigo}" /></td>
-									<td><c:out value="${matricula.aluno.nome}" /></td>
-									<td><c:out value="${matricula.disciplina.nome}" /></td>
-									<td><c:out value="${matricula.data }" /></td>
-									<td><c:out value="${matricula.status.nome}" /></td>
+									<td><c:out value="${t.codigo }" /></td>
+									<td><c:out value="${t.aluno.nome }" /></td>
+									<td><c:out value="${t.telefone }" /></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -186,7 +164,7 @@ form {
 	margin-left: 30px;
 	background-color: #dcdcdc;
 	width: 600px;
-	height: 430px;
+	height: 330px;
 	padding: 10px;
 	border-radius: 30px;
 }
@@ -201,7 +179,6 @@ form {
 .botoes {
 	display: flex;
 	gap: 15px;
-	margin-left: 30px;
 	padding: 20px;
 }
 
@@ -240,7 +217,8 @@ form {
 
 .input_data {
 	margin-bottom: 20px;
-	margin-left: -430px;
+	margin-left: -10px;
+	margin-top: 10px;
 }
 
 select {
@@ -251,10 +229,6 @@ select {
 	width: 200px;
 	height: 30px;
 	border: 1px solid #C0C0C0;
-}
-
-#status {
-	margin-top: -10px;
 }
 </style>
 </html>
